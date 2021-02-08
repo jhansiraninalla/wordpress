@@ -1,0 +1,42 @@
+mkdir -p /tmp/WordPress/scripts
+
+#!/bin/bash
+sudo amazon-linux-extras install php7.4
+sudo yum install -y httpd mariadb-server php
+
+#!/bin/bash
+systemctl start mariadb.service
+systemctl start httpd.service
+systemctl start php-fpm.service
+
+
+#!/bin/bash
+isExistApp=pgrep httpd
+if [[ -n $isExistApp ]]; then
+systemctl stop httpd.service
+fi
+isExistApp=pgrep mysqld
+if [[ -n $isExistApp ]]; then
+systemctl stop mariadb.service
+fi
+isExistApp=pgrep php-fpm
+if [[ -n $isExistApp ]]; then
+systemctl stop php-fpm.service
+
+fi
+
+#!/bin/bash
+mysql -uroot <<CREATE_TEST_DB
+CREATE DATABASE IF NOT EXISTS test;
+CREATE_TEST_DB
+chmod -R 755 /var/www/html/WordPress
+
+#!/bin/bash
+chmod -R 777 /var/www/html/WordPress
+
+chmod +x /tmp/WordPress/scripts/*
+
+
+
+
+
