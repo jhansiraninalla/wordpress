@@ -1,0 +1,6 @@
+wget https://github.com/WordPress/WordPress/archive/master.zip
+unzip master -d /tmp/WordPress_Temp
+mkdir -p /tmp/WordPress
+cp -paf /tmp/WordPress_Temp/WordPress-master/* /tmp/WordPress
+rm -rf /tmp/WordPress_Temp
+rm -f master
